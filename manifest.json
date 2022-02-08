@@ -1,0 +1,22 @@
+{
+  "description":"Foils Amazons hopes that people will forget to use the amazon smile by redirecting www.amazon.com to smile.amazon.com when signed-in.",
+  "manifest_version":2,
+  "name":"AutoSmile",
+  "version":"1.0",
+  "homepage_url":"https://radflix.uk",
+  "icons":{
+     "48":"icons/AutoSmile-48.png",
+     "96":"icons/AutoSmile-96.png"
+  },
+  "permissions":[
+     "webRequest",
+     "webRequestBlocking",
+     "cookies",
+     "https://www.amazon.com/*"
+  ],
+  "background":{
+     "scripts":[
+        "background_script.js"
+     ]
+  }
+}
