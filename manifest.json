@@ -1,9 +1,9 @@
 {
-  "description":"Foils Amazons hopes that people will forget to use the amazon smile by redirecting www.amazon.com to smile.amazon.com when signed-in.",
+  "description":"For some reason Amazon doesnt automatically place orders using Amazon Smile for donations. This add-on will automatically detect if you are signed-in to www.amazon.com and if so redirect to smile.amazon.com",
   "manifest_version":2,
   "name":"AutoSmile",
   "version":"1.0",
-  "homepage_url":"https://radflix.uk",
+  "homepage_url":"https://github.com/dillingspam/AutoSmile",
   "icons":{
      "48":"icons/AutoSmile-48.png",
      "96":"icons/AutoSmile-96.png"
