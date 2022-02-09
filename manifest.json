@@ -4,6 +4,7 @@
   "name":"AutoSmile",
   "version":"1.0",
   "homepage_url":"https://github.com/dillingspam/AutoSmile",
+  "incognito": "spanning",
   "icons":{
      "48":"icons/AutoSmile-48.png",
      "96":"icons/AutoSmile-96.png"
@@ -18,5 +19,11 @@
      "scripts":[
         "background_script.js"
      ]
-  }
+  },
+  "browser_specific_settings": {
+   "gecko": {
+     "id": "addon@example.com",
+     "strict_min_version": "42.0"
+   }
+ } 
 }

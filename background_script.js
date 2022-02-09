@@ -1,36 +1,49 @@
-var tokenInfo = 0; // initialize token info
+var tokenInfo = false; // initialize token info
 
-// receives promise getting from getTokenLength and sets tokenInfo length if cookie found or 0 if not
+// set tokenInfo if cookie found
 function setTokenInfo(cookie) {
     if (cookie) {
+        console.log(cookie)
         if (cookie.domain === ".amazon.com") {
-            tokenInfo = cookie.value.length;
+            tokenInfo = true;
         }
     }
     else {
-        tokenInfo = 0;
+        tokenInfo = false;
     }
 }
 
-// get amazon token cookie and send promise getting to setTokenInfo
-function getTokenLength() {
-    var getting = browser.cookies.get({ name: "session-token", url: "https://www.amazon.com" });
+// check for cookie based on window type then send promise getting to setTokenInfo
+function getCookie(window) {
+    console.log(window);
+    if (window.incognito === true) {
+        getting = browser.cookies.get({ name: "sess-at-main", url: "https://www.amazon.com", storeId: "firefox-private" });
+    }
+    else {
+        getting = browser.cookies.get({ name: "sess-at-main", url: "https://www.amazon.com" });
+    }
     getting.then(setTokenInfo);
 }
 
-// when signed into amazon token is longer than 220 then reset tokenInfo and redirect
+// get current window to determine if private browsing
+function getToken() {
+    var gettingWindow = browser.windows.getCurrent()
+    gettingWindow.then(getCookie);
+}
+
+// redirect amazon when token is true
 function redirect(requestDetails) {
     console.log(tokenInfo);
-    if (tokenInfo >= 220) {
-        tokenInfo = 0;
+    if (tokenInfo === true) {
+        tokenInfo = false;
         console.log("Redirecting: " + requestDetails.url);
         return { redirectUrl: "https://smile.amazon.com" };
     }
 }
 
 browser.webRequest.onBeforeRedirect.addListener(
-    getTokenLength,
-    { urls: ["https://www.amazon.com/*"] },
+    getToken,
+    { urls: ["https://www.amazon.com/*"] }
 );
 
 browser.webRequest.onHeadersReceived.addListener(
@@ -40,7 +53,7 @@ browser.webRequest.onHeadersReceived.addListener(
 );
 
 browser.webRequest.onBeforeRequest.addListener(
-    getTokenLength,
+    getToken,
     { urls: ["https://www.amazon.com/*"] },
     ["blocking"]
 );
