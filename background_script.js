@@ -3,7 +3,6 @@ var signIn = false; // initialize token info
 // set signIn if cookie found
 function cookieStatus(cookie) {
     if (cookie) {
-        console.log(cookie)
         if (cookie.domain === ".amazon.com") {
             signIn = true;
         }
@@ -15,7 +14,6 @@ function cookieStatus(cookie) {
 
 // check for cookie based on window type then send promise getting to cookieStatus
 function getCookie(window) {
-    console.log(window);
     if (window.incognito === true) {
         getting = browser.cookies.get({ name: "sess-at-main", url: "https://www.amazon.com", storeId: "firefox-private" });
     }
