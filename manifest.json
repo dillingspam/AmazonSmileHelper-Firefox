@@ -1,9 +1,9 @@
 {
   "description":"For some reason Amazon doesnt automatically place orders using Amazon Smile for donations. This add-on will automatically detect if you are signed-in to www.amazon.com and if so redirect to smile.amazon.com",
   "manifest_version":2,
-  "name":"AutoSmile",
-  "version":"1.0",
-  "homepage_url":"https://github.com/dillingspam/AutoSmile-Firefox",
+  "name":"Amazon Smile Helper",
+  "version":"1.0.1",
+  "homepage_url":"https://github.com/dillingspam/AmazonSmileHelper-Firefox",
   "incognito": "spanning",
   "icons":{
      "48":"icons/AutoSmile-48.png",

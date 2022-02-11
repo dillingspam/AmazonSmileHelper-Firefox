@@ -1,19 +1,19 @@
-var tokenInfo = false; // initialize token info
+var signIn = false; // initialize token info
 
-// set tokenInfo if cookie found
-function setTokenInfo(cookie) {
+// set signIn if cookie found
+function cookieStatus(cookie) {
     if (cookie) {
         console.log(cookie)
         if (cookie.domain === ".amazon.com") {
-            tokenInfo = true;
+            signIn = true;
         }
     }
     else {
-        tokenInfo = false;
+        signIn = false;
     }
 }
 
-// check for cookie based on window type then send promise getting to setTokenInfo
+// check for cookie based on window type then send promise getting to cookieStatus
 function getCookie(window) {
     console.log(window);
     if (window.incognito === true) {
@@ -22,28 +22,28 @@ function getCookie(window) {
     else {
         getting = browser.cookies.get({ name: "sess-at-main", url: "https://www.amazon.com" });
     }
-    getting.then(setTokenInfo);
+    getting.then(cookieStatus);
 }
 
 // get current window to determine if private browsing
-function getToken() {
+function getActiveWindow(details) {
     var gettingWindow = browser.windows.getCurrent()
     gettingWindow.then(getCookie);
 }
 
 // redirect amazon when token is true
 function redirect(requestDetails) {
-    console.log(tokenInfo);
-    if (tokenInfo === true) {
-        tokenInfo = false;
+    console.log(signIn);
+    if (signIn === true) {
+        signIn = false;
         console.log("Redirecting: " + requestDetails.url);
-        return { redirectUrl: "https://smile.amazon.com" };
+        return { redirectUrl: requestDetails.url.replace('https://www.amazon.com', 'https://smile.amazon.com') };
     }
 }
 
 browser.webRequest.onBeforeRedirect.addListener(
-    getToken,
-    { urls: ["https://www.amazon.com/*"] }
+    getActiveWindow,
+    { urls: ["https://www.amazon.com/*"], types: ["main_frame"] }
 );
 
 browser.webRequest.onHeadersReceived.addListener(
@@ -53,7 +53,7 @@ browser.webRequest.onHeadersReceived.addListener(
 );
 
 browser.webRequest.onBeforeRequest.addListener(
-    getToken,
-    { urls: ["https://www.amazon.com/*"] },
+    getActiveWindow,
+    { urls: ["https://www.amazon.com/*"], types: ["main_frame"] },
     ["blocking"]
 );
