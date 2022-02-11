@@ -1,5 +1,5 @@
 {
-  "description":"For some reason Amazon doesnt automatically place orders using Amazon Smile for donations. This add-on will automatically detect if you are signed-in to www.amazon.com and if so redirect to smile.amazon.com",
+  "description":"Verifies if amazon.com is signed-in and if so redirects to smile.amazon.com to ensure purchases count towards the %0.5 donation to a charity of your choice.",
   "manifest_version":2,
   "name":"Amazon Smile Helper",
   "version":"1.0.1",
